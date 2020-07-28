@@ -7,10 +7,7 @@ router.get('/', async (req, res) => {
     const todos = await pool.query('SELECT * FROM todo');
     res.json(todos.rows);
   } catch (err) {
-    console.log(err.message);
-    res.json({
-      message: "Couldn't get todos",
-    });
+    res.json({ message: err.message });
   }
 });
 
@@ -23,7 +20,7 @@ router.get('/:id', async (req, res) => {
     res.json(todo.rows[0]);
   } catch (err) {
     res.status(404);
-    console.log(err.message);
+    res.json({ message: err.message });
   }
 });
 
@@ -40,11 +37,8 @@ router.post('/', async (req, res) => {
     );
     res.json(newTodo.rows[0]);
   } catch (err) {
-    console.log(err.message);
     res.status(500);
-    res.json({
-      message: 'Adding a todo failed',
-    });
+    res.json({ message: err.message });
   }
 });
 
@@ -63,7 +57,7 @@ router.put('/:id', async (req, res) => {
     res.json(updateTodo.rows[0]);
   } catch (err) {
     res.status(500);
-    res.json(err.message);
+    res.json({ message: err.message });
   }
 });
 
@@ -77,7 +71,7 @@ router.delete('/:id', async (req, res) => {
     res.json(todo.rows[0]);
   } catch (err) {
     res.status(500);
-    res.json(err.message);
+    res.json({ message: err.message });
   }
 });
 
