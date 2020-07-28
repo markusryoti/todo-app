@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 router.post('/', async (req, res) => {
-  const { email, password, reqFirstName, reqLastName } = req.body;
+  const { email, password, first_name, last_name } = req.body;
 
-  const firstName = reqFirstName ? reqFirstName : null;
-  const lastName = reqLastName ? reqLastName : null;
+  const firstName = first_name ? first_name : null;
+  const lastName = last_name ? last_name : null;
 
   try {
     const user = await pool.query('SELECT * FROM users WHERE email = $1', [
@@ -25,13 +25,14 @@ router.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password.toString(), salt);
 
     const newUser = await pool.query(
-      'INSERT INTO users (email, password, first_name, last_name) VALUES($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO users (email, password, first_name, last_name) ' +
+        'VALUES($1, $2, $3, $4) RETURNING *',
       [email, hashedPassword, firstName, lastName]
     );
 
     const payload = {
       user: {
-        id: newUser.user_id,
+        id: newUser.rows[0].user_id,
       },
     };
 
@@ -49,7 +50,5 @@ router.post('/', async (req, res) => {
     res.json({ message: err.message });
   }
 });
-
-// TODO: delete user
 
 module.exports = router;
