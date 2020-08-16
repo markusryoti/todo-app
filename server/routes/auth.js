@@ -8,10 +8,10 @@ require('dotenv').config();
 
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await pool.query('SELECT * FROM users WHERE user_id = $1', [
+    const result = await pool.query('SELECT * FROM users WHERE user_id = $1', [
       req.user.id,
     ]);
-    res.json(user.rows[0]);
+    res.json(result.rows[0]);
   } catch (err) {
     res.status(500);
     res.json({ message: err.message });
@@ -26,15 +26,15 @@ router.post('/', async (req, res) => {
       email,
     ]);
 
-    const user = result.rows[0];
+    const foundUser = result.rows[0];
 
-    if (!user) {
+    if (!foundUser) {
       return res.status(400).json({ message: 'Invalid email' });
     }
 
     const passwordCompare = await bcrypt.compare(
       password.toString(),
-      user.password
+      foundUser.password
     );
 
     if (!passwordCompare) {
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id,
+        id: foundUser.user_id,
       },
     };
 
@@ -81,7 +81,7 @@ router.put('/', auth, async (req, res) => {
     user.password
   );
 
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(process.env.JWT_SALT);
   const currentPassword = passwordCompare
     ? user.password
     : await bcrypt.hash(password.toString(), salt);
@@ -105,11 +105,11 @@ router.put('/', auth, async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
   try {
-    const user = await pool.query(
+    const result = await pool.query(
       'DELETE FROM users WHERE user_id = $1 RETURNING *',
       [req.user.id]
     );
-    res.json(user.rows[0]);
+    res.json(result.rows[0]);
   } catch (err) {
     res.status(500);
     res.json({ message: err.message });

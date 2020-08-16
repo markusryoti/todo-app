@@ -21,11 +21,12 @@ router.post('/', async (req, res) => {
       res.json({ message: 'User already exists with given email' });
     }
 
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(parseInt(process.env.JWT_SALT));
     const hashedPassword = await bcrypt.hash(password.toString(), salt);
 
     const newUser = await pool.query(
-      'INSERT INTO users (email, password, first_name, last_name) ' +
+      'INSERT INTO users ' +
+        '(email, password, first_name, last_name) ' +
         'VALUES($1, $2, $3, $4) RETURNING *',
       [email, hashedPassword, firstName, lastName]
     );
@@ -46,6 +47,7 @@ router.post('/', async (req, res) => {
       }
     );
   } catch (err) {
+    console.log(err);
     res.status(500);
     res.json({ message: err.message });
   }
