@@ -12,7 +12,7 @@ export default (state, action) => {
         todos: [...state.todos, action.payload],
         loading: false,
       };
-    case 'EDIT_TODO':
+    case 'UPDATE_TODO':
       return {
         ...state,
         todos: state.todos.map((todo) =>
@@ -26,10 +26,25 @@ export default (state, action) => {
         todos: state.todos.filter((todo) => todo.todo_id !== action.payload),
         loading: false,
       };
+    case 'SET_CURRENT':
+      return {
+        ...state,
+        current: action.payload,
+      };
+    case 'SET_MODAL_STATE':
+      return {
+        ...state,
+        modalState: action.payload,
+      };
     case 'SET LOADING':
       return {
         ...state,
         loading: true,
+      };
+    case 'CLEAR_CURRENT':
+      return {
+        ...state,
+        current: null,
       };
     case 'TODO_LOAD_ERROR':
       return {

@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
-import TodoContext from '../context/todos/todoContext';
+import TodoContext, { MODAL_STATE } from '../context/todos/todoContext';
 
 const Todo = ({ todo }) => {
   const todoContext = useContext(TodoContext);
-  const { deleteTodo } = todoContext;
+  const { deleteTodo, setModalState, setCurrent } = todoContext;
 
-  const onRemove = (e) => {
+  const onRemove = () => {
     deleteTodo(todo.todo_id);
+  };
+
+  const onEdit = () => {
+    setCurrent(todo);
+    setModalState(MODAL_STATE.EDIT);
   };
 
   return (
@@ -16,10 +21,12 @@ const Todo = ({ todo }) => {
         <p>{todo.description}</p>
       </div>
       <div className="todo-card-controls">
-        <button className="btn">Edit</button>
+        <button className="btn btn-warning" onClick={onEdit}>
+          Edit
+        </button>
       </div>
       <div className="todo-card-controls">
-        <button className="btn" onClick={onRemove}>
+        <button className="btn btn-danger" onClick={onRemove}>
           Remove
         </button>
       </div>

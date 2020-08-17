@@ -83,10 +83,12 @@ const AuthState = (props) => {
         body: JSON.stringify(formData),
       });
       const resData = await res.json();
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: resData,
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: resData,
+        });
+      }
       loadUser();
     } catch (err) {
       dispatch({

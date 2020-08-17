@@ -1,48 +1,84 @@
-import React, { useState, useContext } from 'react';
-import TodoContext from '../context/todos/todoContext';
+import React, { useState, useContext, useEffect } from 'react';
+import TodoContext, { MODAL_STATE } from '../context/todos/todoContext';
 
 const TodoForm = () => {
-  const [modalState, setModalState] = useState('closed');
-  const [formState, setFormState] = useState({});
-
   const todoContext = useContext(TodoContext);
-  const { addTodo } = todoContext;
+  const {
+    modalState,
+    setModalState,
+    addTodo,
+    updateTodo,
+    current,
+    clearCurrent,
+  } = todoContext;
 
-  const showHideClassName =
-    modalState === 'opened' ? 'modal display-block' : 'modal display-none';
+  useEffect(() => {
+    if (current !== null) {
+      setFormValues({
+        title: current.title,
+        description: current.description,
+      });
+    } else {
+      setFormValues({
+        title: '',
+        description: '',
+      });
+    }
+  }, [todoContext, current]);
+
+  const [formValues, setFormValues] = useState({
+    title: '',
+    description: '',
+  });
+  const { title, description } = formValues;
 
   const onChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    addTodo(formState);
-    setFormState({});
-    setModalState('closed');
+    if (modalState === MODAL_STATE.ADD) {
+      addTodo(formValues);
+    } else if (modalState === MODAL_STATE.EDIT) {
+      updateTodo({ ...formValues, todo_id: current.todo_id });
+    }
+    setFormValues({
+      title: '',
+      description: '',
+    });
+    setModalState(MODAL_STATE.HIDDEN);
+    clearCurrent();
   };
+
+  const showHideClassName =
+    modalState === MODAL_STATE.ADD || modalState === MODAL_STATE.EDIT
+      ? 'modal display-block'
+      : 'modal display-none';
 
   return (
     <div>
-      <button
-        id="modal_opener"
-        className="btn btn-primary"
-        onClick={() => setModalState('opened')}
-      >
-        Add New Todo
-      </button>
       <div className={showHideClassName}>
         <div className="modal-main">
-          <h3>Add New Todo</h3>
+          <h3>
+            {modalState === MODAL_STATE.ADD ? 'Add New Todo' : 'Update Todo'}
+          </h3>
           <form onSubmit={onFormSubmit}>
             <label htmlFor="title">Title</label>
-            <input name="title" type="text" onChange={onChange} />
+            <input name="title" type="text" value={title} onChange={onChange} />
             <label htmlFor="description">Description</label>
-            <textarea name="description" onChange={onChange}></textarea>
-            <input type="submit" className="btn btn-secondary" />
+            <textarea
+              name="description"
+              onChange={onChange}
+              value={description}
+            ></textarea>
+            <input type="submit" className="btn btn-primary" />
           </form>
-          <button className="btn" onClick={() => setModalState('closed')}>
-            close
+          <button
+            className="btn btn-warning"
+            onClick={() => setModalState(MODAL_STATE.HIDDEN)}
+          >
+            Close
           </button>
         </div>
       </div>

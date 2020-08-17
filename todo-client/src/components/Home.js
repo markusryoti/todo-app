@@ -3,7 +3,7 @@ import AuthContext from '../context/auth/authContext';
 import TodoState from '../context/todos/TodoState';
 
 import Login from './Login';
-import FilterTodos from './FilterTodos';
+import TopBar from './TopBar';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
@@ -16,7 +16,7 @@ const Home = () => {
         {authContext.isAuthenticated ? (
           <div>
             <div className="home-view-todo-control">
-              <FilterTodos />
+              <TopBar />
               <TodoForm />
             </div>
             <TodoList />

@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import TodoContext from './todoContext';
+import TodoContext, { MODAL_STATE } from './todoContext';
 import todoReducer from './todoReducer';
 
 const { REACT_APP_API_URL } = process.env;
@@ -11,6 +11,7 @@ const TodoState = (props) => {
     filtered: null,
     error: null,
     loading: null,
+    modalState: MODAL_STATE.HIDDEN,
   };
 
   const [state, dispatch] = useReducer(todoReducer, initialState);
@@ -67,22 +68,25 @@ const TodoState = (props) => {
     }
   };
 
-  const editTodo = async (formData) => {
+  const updateTodo = async (formData) => {
     const token = localStorage.getItem('token');
     dispatch({ type: 'SET_LOADING', payload: { status: true } });
     try {
-      const res = await fetch(REACT_APP_API_URL + '/api/todos', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': token,
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        REACT_APP_API_URL + `/api/todos/${formData.todo_id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': token,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       if (res.status === 200) {
         const resData = await res.json();
         dispatch({
-          type: 'EDIT_TODO',
+          type: 'UPDATE_TODO',
           payload: resData,
         });
       }
@@ -118,6 +122,18 @@ const TodoState = (props) => {
     }
   };
 
+  const setModalState = (state) => {
+    dispatch({ type: 'SET_MODAL_STATE', payload: state });
+  };
+
+  const setCurrent = (todo) => {
+    dispatch({ type: 'SET_CURRENT', payload: todo });
+  };
+
+  const clearCurrent = () => {
+    dispatch({ type: 'CLEAR_CURRENT' });
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -126,9 +142,14 @@ const TodoState = (props) => {
         filtered: state.filtered,
         error: state.error,
         loading: state.loading,
+        modalState: state.modalState,
         getTodos,
         addTodo,
+        updateTodo,
         deleteTodo,
+        clearCurrent,
+        setModalState,
+        setCurrent,
       }}
     >
       {props.children}
