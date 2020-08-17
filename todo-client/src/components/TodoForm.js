@@ -24,7 +24,7 @@ const TodoForm = () => {
         description: '',
       });
     }
-  }, [todoContext, current]);
+  }, [current]);
 
   const [formValues, setFormValues] = useState({
     title: '',
@@ -38,6 +38,7 @@ const TodoForm = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+
     if (modalState === MODAL_STATE.ADD) {
       addTodo(formValues);
     } else if (modalState === MODAL_STATE.EDIT) {
@@ -49,6 +50,11 @@ const TodoForm = () => {
     });
     setModalState(MODAL_STATE.HIDDEN);
     clearCurrent();
+  };
+
+  const handleFormKeypress = (e) => {
+    if (e.key !== 'Enter') return;
+    onFormSubmit(e);
   };
 
   const showHideClassName =
@@ -63,7 +69,11 @@ const TodoForm = () => {
           <h3>
             {modalState === MODAL_STATE.ADD ? 'Add New Todo' : 'Update Todo'}
           </h3>
-          <form onSubmit={onFormSubmit}>
+          <form
+            onSubmit={onFormSubmit}
+            onKeyPress={handleFormKeypress}
+            className="todo-form"
+          >
             <label htmlFor="title">Title</label>
             <input name="title" type="text" value={title} onChange={onChange} />
             <label htmlFor="description">Description</label>
