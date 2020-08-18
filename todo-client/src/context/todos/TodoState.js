@@ -122,6 +122,10 @@ const TodoState = (props) => {
     }
   };
 
+  const filterTodos = (text) => {
+    dispatch({ type: 'FILTER_CONTACTS', payload: text });
+  };
+
   const setModalState = (state) => {
     dispatch({ type: 'SET_MODAL_STATE', payload: state });
   };
@@ -132,6 +136,10 @@ const TodoState = (props) => {
 
   const clearCurrent = () => {
     dispatch({ type: 'CLEAR_CURRENT' });
+  };
+
+  const clearFilter = () => {
+    dispatch({ type: 'CLEAR_FILTERED' });
   };
 
   return (
@@ -147,7 +155,9 @@ const TodoState = (props) => {
         addTodo,
         updateTodo,
         deleteTodo,
+        filterTodos,
         clearCurrent,
+        clearFilter,
         setModalState,
         setCurrent,
       }}

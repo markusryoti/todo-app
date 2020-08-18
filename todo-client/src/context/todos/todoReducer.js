@@ -31,6 +31,14 @@ export default (state, action) => {
         ...state,
         current: action.payload,
       };
+    case 'FILTER_CONTACTS':
+      return {
+        ...state,
+        filtered: state.todos.filter((item) => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return item.title.match(regex) || item.description.match(regex);
+        }),
+      };
     case 'SET_MODAL_STATE':
       return {
         ...state,
@@ -45,6 +53,11 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
+      };
+    case 'CLEAR_FILTERED':
+      return {
+        ...state,
+        filtered: null,
       };
     case 'TODO_LOAD_ERROR':
       return {

@@ -4,17 +4,20 @@ import Todo from './Todo';
 
 const TodoList = () => {
   const todoContext = useContext(TodoContext);
-  const { todos, getTodos } = todoContext;
+  const { todos, getTodos, filtered } = todoContext;
 
   useEffect(() => {
     getTodos();
     //eslint-disable-next-line
-  }, []);
+  }, [filtered]);
 
   return (
     <div>
       <ul>
-        {todos && todos.map((todo) => <Todo key={todo.todo_id} todo={todo} />)}
+        {filtered
+          ? filtered.map((todo) => <Todo key={todo.todo_id} todo={todo} />)
+          : todos &&
+            todos.map((todo) => <Todo key={todo.todo_id} todo={todo} />)}
       </ul>
     </div>
   );
