@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import TodoContext, { MODAL_STATE } from '../context/todos/todoContext';
+import TodoContext from '../context/todos/todoContext';
+import { MODAL_STATE } from '../context/todos/modalState';
 
 const TodoForm = () => {
   const todoContext = useContext(TodoContext);

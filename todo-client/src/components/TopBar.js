@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import TodoContext, { MODAL_STATE } from '../context/todos/todoContext';
+import TodoContext from '../context/todos/todoContext';
+import { MODAL_STATE } from '../context/todos/modalState';
 
 const TopBar = () => {
   const todoContext = useContext(TodoContext);

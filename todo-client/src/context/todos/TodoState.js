@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
-import TodoContext, { MODAL_STATE } from './todoContext';
+import TodoContext from './todoContext';
 import todoReducer from './todoReducer';
+import { MODAL_STATE } from './modalState';
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -10,7 +11,7 @@ const TodoState = (props) => {
     current: null,
     filtered: null,
     error: null,
-    loading: null,
+    loading: true,
     modalState: MODAL_STATE.HIDDEN,
   };
 
@@ -43,7 +44,7 @@ const TodoState = (props) => {
 
   const addTodo = async (formData) => {
     const token = localStorage.getItem('token');
-    dispatch({ type: 'SET_LOADING', payload: { status: true } });
+    dispatch({ type: 'SET_LOADING' });
     try {
       const res = await fetch(REACT_APP_API_URL + '/api/todos', {
         method: 'POST',
@@ -70,7 +71,7 @@ const TodoState = (props) => {
 
   const updateTodo = async (formData) => {
     const token = localStorage.getItem('token');
-    dispatch({ type: 'SET_LOADING', payload: { status: true } });
+    dispatch({ type: 'SET_LOADING' });
     try {
       const res = await fetch(
         REACT_APP_API_URL + `/api/todos/${formData.todo_id}`,
@@ -100,7 +101,7 @@ const TodoState = (props) => {
 
   const deleteTodo = async (id) => {
     const token = localStorage.getItem('token');
-    dispatch({ type: 'SET_LOADING', payload: { status: true } });
+    dispatch({ type: 'SET_LOADING' });
     try {
       const res = await fetch(REACT_APP_API_URL + `/api/todos/${id}`, {
         method: 'DELETE',
