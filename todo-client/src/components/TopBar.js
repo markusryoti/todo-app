@@ -29,7 +29,7 @@ const TopBar = () => {
         className="btn btn-primary"
         onClick={() => setModalState(MODAL_STATE.ADD)}
       >
-        Add New Todo
+        <i className="fas fa-plus-circle"></i> Add New Todo
       </button>
       <input
         type="text"

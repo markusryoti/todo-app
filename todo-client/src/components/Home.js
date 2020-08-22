@@ -11,21 +11,19 @@ const Home = () => {
   const authContext = useContext(AuthContext);
 
   return (
-    <div>
-      <TodoState>
-        {authContext.isAuthenticated ? (
-          <div>
-            <div className="home-view-todo-control">
-              <TopBar />
-              <TodoForm />
-            </div>
-            <TodoList />
+    <TodoState>
+      {authContext.isAuthenticated ? (
+        <>
+          <div className="home-view-todo-control">
+            <TopBar />
+            <TodoForm />
           </div>
-        ) : (
-          <Login />
-        )}
-      </TodoState>
-    </div>
+          <TodoList />
+        </>
+      ) : (
+        <Login />
+      )}
+    </TodoState>
   );
 };
 

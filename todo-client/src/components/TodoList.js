@@ -12,14 +12,14 @@ const TodoList = () => {
   }, [filtered]);
 
   return (
-    <div>
-      <ul>
-        {loading && <h1>Loading</h1>}
+    <div className="todo-container">
+      {loading && <h1>Loading</h1>}
+      <div>
         {filtered
           ? filtered.map((todo) => <Todo key={todo.todo_id} todo={todo} />)
           : todos &&
             todos.map((todo) => <Todo key={todo.todo_id} todo={todo} />)}
-      </ul>
+      </div>
     </div>
   );
 };

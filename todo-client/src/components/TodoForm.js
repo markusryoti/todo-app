@@ -64,34 +64,32 @@ const TodoForm = () => {
       : 'modal display-none';
 
   return (
-    <div>
-      <div className={showHideClassName}>
-        <div className="modal-main">
-          <h3>
-            {modalState === MODAL_STATE.ADD ? 'Add New Todo' : 'Update Todo'}
-          </h3>
-          <form
-            onSubmit={onFormSubmit}
-            onKeyPress={handleFormKeypress}
-            className="todo-form"
-          >
-            <label htmlFor="title">Title</label>
-            <input name="title" type="text" value={title} onChange={onChange} />
-            <label htmlFor="description">Description</label>
-            <textarea
-              name="description"
-              onChange={onChange}
-              value={description}
-            ></textarea>
-            <input type="submit" className="btn btn-primary" />
-          </form>
-          <button
-            className="btn btn-warning"
-            onClick={() => setModalState(MODAL_STATE.HIDDEN)}
-          >
-            Close
-          </button>
-        </div>
+    <div className={showHideClassName}>
+      <div className="modal-main">
+        <h3>
+          {modalState === MODAL_STATE.ADD ? 'Add New Todo' : 'Update Todo'}
+        </h3>
+        <form
+          onSubmit={onFormSubmit}
+          onKeyPress={handleFormKeypress}
+          className="todo-form"
+        >
+          <label htmlFor="title">Title</label>
+          <input name="title" type="text" value={title} onChange={onChange} />
+          <label htmlFor="description">Description</label>
+          <textarea
+            name="description"
+            onChange={onChange}
+            value={description}
+          ></textarea>
+          <input type="submit" className="btn btn-primary" />
+        </form>
+        <button
+          className="btn btn-warning"
+          onClick={() => setModalState(MODAL_STATE.HIDDEN)}
+        >
+          <i className="fas fa-times"></i> Close
+        </button>
       </div>
     </div>
   );
