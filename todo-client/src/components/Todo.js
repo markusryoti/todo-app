@@ -11,7 +11,6 @@ const Todo = ({ todo }) => {
   };
 
   const onEdit = () => {
-    // setCurrent(todo);
     setModalState(MODAL_STATE.EDIT);
   };
 

@@ -24,9 +24,9 @@ export default (state, action) => {
       return {
         ...state,
         todos: state.todos.filter((todo) => todo.todo_id !== action.payload),
-        filtered: state.filtered.filter(
-          (todo) => todo.todo_id !== action.payload
-        ),
+        filtered:
+          state.filtered &&
+          state.filtered.filter((todo) => todo.todo_id !== action.payload),
         loading: false,
       };
     case 'SET_CURRENT':

@@ -4,7 +4,13 @@ import { MODAL_STATE } from '../context/todos/modalState';
 
 const TopBar = () => {
   const todoContext = useContext(TodoContext);
-  const { filterTodos, filtered, clearFilter, setModalState } = todoContext;
+  const {
+    filterTodos,
+    filtered,
+    clearFilter,
+    setModalState,
+    setCurrent,
+  } = todoContext;
 
   const text = useRef('');
 
@@ -27,7 +33,10 @@ const TopBar = () => {
       <button
         id="modal_opener"
         className="btn btn-primary"
-        onClick={() => setModalState(MODAL_STATE.ADD)}
+        onClick={() => {
+          setCurrent(null);
+          setModalState(MODAL_STATE.ADD);
+        }}
       >
         <i className="fas fa-plus-circle"></i> Add New Todo
       </button>
