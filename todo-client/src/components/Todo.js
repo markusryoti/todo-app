@@ -14,9 +14,14 @@ const Todo = ({ todo }) => {
     setModalState(MODAL_STATE.EDIT);
   };
 
-  const toggleControls = () => {
+  const toggleControls = (e) => {
     if (current === null || current.todo_id !== todo.todo_id) {
       setCurrent({ ...todo, controlState: 'visible' });
+    } else if (
+      e.target.classList.contains('btn') ||
+      e.target.classList.contains('fa-edit')
+    ) {
+      return;
     } else {
       setCurrent({
         ...todo,
