@@ -1,10 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import TodoContext from '../context/todos/todoContext';
 import { MODAL_STATE } from '../context/todos/modalState';
 
 const Todo = ({ todo }) => {
   const todoContext = useContext(TodoContext);
-  const { deleteTodo, setModalState, current, setCurrent } = todoContext;
+  const {
+    deleteTodo,
+    setModalState,
+    current,
+    setCurrent,
+    clearCurrent,
+  } = todoContext;
+
+  useEffect(() => {
+    return () => clearCurrent();
+    // eslint-disable-next-line
+  }, []);
 
   const onRemove = () => {
     deleteTodo(todo.todo_id);
@@ -16,17 +27,9 @@ const Todo = ({ todo }) => {
 
   const toggleControls = (e) => {
     if (current === null || current.todo_id !== todo.todo_id) {
-      setCurrent({ ...todo, controlState: 'visible' });
-    } else if (
-      e.target.classList.contains('btn') ||
-      e.target.classList.contains('fa-edit')
-    ) {
-      return;
+      setCurrent(todo);
     } else {
-      setCurrent({
-        ...todo,
-        controlState: current.controlState === 'visible' ? 'hidden' : 'visible',
-      });
+      clearCurrent();
     }
   };
 
@@ -37,10 +40,7 @@ const Todo = ({ todo }) => {
         <p>{todo.description}</p>
       </div>
       {current && current.todo_id === todo.todo_id ? (
-        <div
-          className="todo-card-controls"
-          style={{ visibility: current.controlState }}
-        >
+        <div className="todo-card-controls">
           <button className="btn btn-warning" onClick={onEdit}>
             <i className="fas fa-edit"></i>
           </button>
@@ -49,14 +49,7 @@ const Todo = ({ todo }) => {
           </button>
         </div>
       ) : (
-        <div className="todo-card-controls" style={{ visibility: 'hidden' }}>
-          <button className="btn btn-warning" onClick={onEdit}>
-            <i className="fas fa-edit"></i>
-          </button>
-          <button className="btn btn-danger" onClick={onRemove}>
-            <i className="fas fa-trash"></i>
-          </button>
-        </div>
+        <></>
       )}
     </div>
   );

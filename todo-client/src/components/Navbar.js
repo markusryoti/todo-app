@@ -2,10 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import AuthContext from '../context/auth/authContext';
+import TodoContext from '../context/todos/todoContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, loadUser, user, logout } = authContext;
+
+  const todoContext = useContext(TodoContext);
+  const { clearCurrent } = todoContext;
 
   useEffect(() => {
     loadUser();
@@ -19,7 +23,13 @@ const Navbar = () => {
       </li>
       <li>{user && user.first_name}</li>
       <li>
-        <a onClick={logout} href="#!">
+        <a
+          onClick={() => {
+            logout();
+            clearCurrent();
+          }}
+          href="#!"
+        >
           <span className="">Logout</span>
         </a>
       </li>
