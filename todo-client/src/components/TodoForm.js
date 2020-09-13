@@ -75,21 +75,29 @@ const TodoForm = () => {
           className="todo-form"
         >
           <label htmlFor="title">Title</label>
-          <input name="title" type="text" value={title} onChange={onChange} />
+          <textarea
+            name="title"
+            type="text"
+            value={title}
+            onChange={onChange}
+          ></textarea>
           <label htmlFor="description">Description</label>
           <textarea
             name="description"
             onChange={onChange}
             value={description}
           ></textarea>
-          <input type="submit" className="btn btn-primary" />
+          <button className="btn btn-primary">
+            <i className="far fa-paper-plane"></i>
+            <span> Submit</span>
+          </button>
+          <button
+            className="btn btn-warning"
+            onClick={() => setModalState(MODAL_STATE.HIDDEN)}
+          >
+            <i className="fas fa-times"></i> Close
+          </button>
         </form>
-        <button
-          className="btn btn-warning"
-          onClick={() => setModalState(MODAL_STATE.HIDDEN)}
-        >
-          <i className="fas fa-times"></i> Close
-        </button>
       </div>
     </div>
   );

@@ -21,7 +21,10 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
-      <li>{user && user.first_name}</li>
+      <li>
+        <i className="fas fa-user"></i>
+        <span> {user && user.first_name}</span>
+      </li>
       <li>
         <a
           onClick={() => {

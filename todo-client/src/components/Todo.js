@@ -28,6 +28,11 @@ const Todo = ({ todo }) => {
   const toggleControls = (e) => {
     if (current === null || current.todo_id !== todo.todo_id) {
       setCurrent(todo);
+    } else if (
+      e.target.classList.contains('btn') ||
+      e.target.classList.contains('fa-edit')
+    ) {
+      return;
     } else {
       clearCurrent();
     }

@@ -9,7 +9,7 @@ const TopBar = () => {
     filtered,
     clearFilter,
     setModalState,
-    setCurrent,
+    clearCurrent,
   } = todoContext;
 
   const text = useRef('');
@@ -34,7 +34,7 @@ const TopBar = () => {
         id="modal_opener"
         className="btn btn-primary"
         onClick={() => {
-          setCurrent(null);
+          clearCurrent();
           setModalState(MODAL_STATE.ADD);
         }}
       >
