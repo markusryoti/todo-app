@@ -1,9 +1,9 @@
 :root {
-  --bg-light: #e4fde1;
-  --bg-dark: #160c28;
-  --primary-color: #1e555c;
-  --warning-color: #edb183;
-  --danger-color: #f15152;
+  --bg-light: #f7f0f5;
+  --bg-dark: #1c1c1c;
+  --primary-color: #00a1e4;
+  --warning-color: #eaf27c;
+  --danger-color: #ff312e;
 }
 
 * {
@@ -13,12 +13,16 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Baloo Tammudu 2', cursive;
   background-color: var(--bg-dark);
+  color: var(--bg-dark);
+  font-weight: 400;
 }
 
 textarea {
   padding: 5px;
+  border-radius: 10px;
+  outline: none;
 }
 
 .container {
@@ -34,7 +38,7 @@ textarea {
 .btn {
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 5%;
+  border-radius: 15px;
   border: none;
 }
 
@@ -44,7 +48,7 @@ textarea {
 }
 
 .btn-secondary {
-  background-color: var(--secondary-color);
+  background-color: var(--se7dcfb6condary-color);
   color: #fff;
 }
 
@@ -112,7 +116,7 @@ textarea {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--bg-dark);
-  background-color: var(--primary-color);
+  background-color: var(--bg-dark);
   border-radius: 5px;
   margin-bottom: 50px;
 }
@@ -130,21 +134,40 @@ textarea {
 
 .todo-card .todo-info {
   padding: 10px;
+  width: 100%;
 }
 
 .todo-card .todo-info h3 {
-  margin-bottom: 10px;
-  font-weight: 400;
+  font-weight: 600;
+}
+
+.todo-card .todo-info .card-line {
+  height: 2px;
+  border-width: 0;
+  width: 100%;
+  margin: 5px 0 15px 0;
+  background-color: var(--bg-dark);
+  color: var(--bg-dark);
 }
 
 .todo-card .todo-info p {
   margin-bottom: 10px;
 }
 
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .todo-card .todo-card-controls {
   padding: 10px;
   display: flex;
   flex-wrap: nowrap;
+  /* animation: 0.2s ease 0s 1 slideInFromRight; */
 }
 
 .todo-card .todo-card-controls button {
@@ -153,22 +176,9 @@ textarea {
   margin: 0 3px;
 }
 
-@keyframes slideInFromRight {
-  0% {
-    transform: translateX(110%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.todo-card .todo-card-controls {
-  animation: 0.2s ease 0s 1 slideInFromRight;
-}
-
 @keyframes bringModalIn {
   0% {
-    transform: scale(0) translate(-50%, -50%);
+    transform: scale(0);
   }
   100% {
     transform: scale(1) translate(-50%, -50%);
@@ -186,10 +196,11 @@ textarea {
 }
 
 .modal-main {
+  border-radius: 20px;
   position: fixed;
   background: var(--bg-light);
-  min-width: 75%;
-  min-height: 75%;
+  width: 500px;
+  min-height: 50%;
   top: 50%;
   left: 50%;
   padding: 2rem;
@@ -201,7 +212,8 @@ textarea {
 
 .modal-main h3 {
   margin-bottom: 20px;
-  font-weight: 400;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .modal-main form {
@@ -212,19 +224,22 @@ textarea {
 
 .modal-main button {
   margin-top: 20px;
+  border-radius: 15px;
 }
 
 .modal-main form label {
   margin-bottom: 5px;
+  font-weight: 500;
 }
 
 .modal-main form textarea[name='title'] {
-  height: 40px;
+  height: 30px;
   margin-bottom: 15px;
 }
 
 .modal-main form textarea[name='description'] {
   height: 100px;
+  padding: 5px;
   margin-bottom: 15px;
 }
 
@@ -268,13 +283,14 @@ textarea {
   margin-top: 20px;
 }
 
-@media (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .modal-main {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 90%;
-    height: 90%;
+    min-width: 300px;
+    width: 95%;
+    height: 65%;
   }
 
   .modal-main form {

@@ -42,6 +42,7 @@ const Todo = ({ todo }) => {
     <div className="todo-card" onClick={toggleControls}>
       <div className="todo-info">
         <h3>{todo.title}</h3>
+        <hr className="card-line"></hr>
         <p>{todo.description}</p>
       </div>
       {current && current.todo_id === todo.todo_id ? (

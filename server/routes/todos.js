@@ -32,7 +32,7 @@ router.post('/', auth, async (req, res) => {
   try {
     const { title, description } = req.body;
     if (!title) {
-      res.status(406).json({ message: 'Title required' });
+      return res.status(406).json({ message: 'Title required' });
     }
     const newTodo = await pool.query(
       'INSERT INTO todos (user_id, title, description)' +
@@ -50,7 +50,7 @@ router.put('/:id', auth, async (req, res) => {
     const { id } = req.params;
     const { title, description } = req.body;
     if (!title) {
-      res.status(406).json({ message: 'Title required' });
+      return res.status(406).json({ message: 'Title required' });
     }
     const updateTodo = await pool.query(
       'UPDATE todos SET title = $1, description = $2' +
